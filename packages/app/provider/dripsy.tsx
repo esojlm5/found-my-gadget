@@ -1,8 +1,54 @@
 import { DripsyProvider, makeTheme } from 'dripsy'
+import { Platform } from 'react-native'
+import { useFonts } from 'expo-font'
+
 import { GlobalProvider } from './globalContext'
+
+export function Fonts({ children }) {
+  const [loaded] = useFonts({
+    raleway: require('../assets/fonts/raleway.ttf'),
+    sonoRegular: require('../assets/fonts/Sono-Regular.ttf'),
+  })
+
+  return <>{loaded && children}</>
+}
+
+const webFont = (font: string) =>
+  Platform.select({
+    web: `${font}, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, Inter-serif`,
+    default: font,
+  })
+
+const rootFontName = 'raleway'
+const headingFontName = 'sonoRegular'
 const theme = makeTheme({
   // https://www.dripsy.xyz/usage/theming/create
+  customFonts: {
+    [rootFontName]: {
+      400: webFont(rootFontName),
+      default: webFont(rootFontName),
+      normal: webFont(rootFontName),
+      // 500: 'dripsyBold',
+      // 600: 'dripsyBold',
+      // bold: 'dripsyBold',
+      // 700: 'dripsyBold',
+      // 800: 'dripsyBold',
+      // 900: 'dripsyBold',
+    },
+    [headingFontName]: {
+      400: webFont(headingFontName),
+      default: webFont(headingFontName),
+      normal: webFont(headingFontName),
+    },
+  },
+  fonts: {
+    root: rootFontName,
+    heading: headingFontName,
+  },
   text: {
+    // h1: {
+    //   fontFamily: headingFontName,
+    // },
     p: {
       fontSize: 16,
     },
@@ -11,14 +57,16 @@ const theme = makeTheme({
 
 export function Dripsy({ children }: { children: React.ReactNode }) {
   return (
-    <GlobalProvider>
-      <DripsyProvider
-        theme={theme}
-        // this disables SSR, since react-native-web doesn't have support for it (yet)
-        ssr
-      >
-        {children}
-      </DripsyProvider>
-    </GlobalProvider>
+    <Fonts>
+      <GlobalProvider>
+        <DripsyProvider
+          theme={theme}
+          // this disables SSR, since react-native-web doesn't have support for it (yet)
+          ssr
+        >
+          {children}
+        </DripsyProvider>
+      </GlobalProvider>
+    </Fonts>
   )
 }

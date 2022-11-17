@@ -2,6 +2,7 @@
   "dependencies": {
     "app": "*",
     "expo": "46.0.13",
+    "expo-font": "^11.0.1",
     "expo-router": "0.0.31",
     "expo-splash-screen": "~0.16.2",
     "expo-status-bar": "~1.4.0",
