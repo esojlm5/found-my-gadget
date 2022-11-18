@@ -7,6 +7,17 @@ import {
   userContextInterface,
 } from 'app/provider/globalContext'
 
+const getItems = async () => {
+  const result = await fetch('https://pokeapi.co/api/v2/pokemon/ditto')
+  const response = await result.json()
+  return response
+}
+
+async function ShowItems() {
+  const result = await getItems()
+  return <div>{`el resultado ${result?.base_experience}`}</div>
+}
+
 export function HomeScreen() {
   const sx = useSx()
   const { value, setValue } = useGlobalContext() as userContextInterface
@@ -14,7 +25,11 @@ export function HomeScreen() {
     <View
       sx={{ flex: 1, justifyContent: 'center', alignItems: 'center', p: 16 }}
     >
-      <H1 sx={{ fontWeight: '800' }} onPress={() => setValue('home')}>
+      <H1
+        style={{ fontFamily: 'ralewayRegular' }}
+        sx={{ fontWeight: '800' }}
+        onPress={() => setValue('home')}
+      >
         Welcome to Solito. {value}
       </H1>
       <View sx={{ maxWidth: 600 }}>

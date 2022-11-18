@@ -4,10 +4,13 @@ import { useFonts } from 'expo-font'
 
 import { GlobalProvider } from './globalContext'
 
+const rootFontName = 'ralewayRegular'
+const headingFontName = 'sonoRegular'
+
 export function Fonts({ children }) {
   const [loaded] = useFonts({
-    raleway: require('../assets/fonts/raleway.ttf'),
-    sonoRegular: require('../assets/fonts/Sono-Regular.ttf'),
+    [rootFontName]: require('../assets/fonts/Raleway-Regular.ttf'),
+    [headingFontName]: require('../assets/fonts/Sono-Regular.ttf'),
   })
 
   return <>{loaded && children}</>
@@ -19,8 +22,6 @@ const webFont = (font: string) =>
     default: font,
   })
 
-const rootFontName = 'raleway'
-const headingFontName = 'sonoRegular'
 const theme = makeTheme({
   // https://www.dripsy.xyz/usage/theming/create
   customFonts: {
@@ -43,7 +44,7 @@ const theme = makeTheme({
   },
   fonts: {
     root: rootFontName,
-    heading: headingFontName,
+    heading: rootFontName,
   },
   text: {
     // h1: {
