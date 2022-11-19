@@ -1,23 +1,17 @@
+import { useEffect, Suspense, lazy } from 'react'
 import { Text, useSx, View, H1, P, Row, A } from 'dripsy'
 import { TextLink } from 'solito/link'
 import { MotiLink } from 'solito/moti'
+// import ReposVercel from '../../componets/ReposVercel'
 
 import {
   useGlobalContext,
   userContextInterface,
 } from 'app/provider/globalContext'
 
-const getItems = async () => {
-  const result = await fetch('https://pokeapi.co/api/v2/pokemon/ditto')
-  const response = await result.json()
-  return response
-}
+// const fetcher = (url) => fetch(url).then((res) => res.json())
 
-async function ShowItems() {
-  const result = await getItems()
-  return <div>{`el resultado ${result?.base_experience}`}</div>
-}
-
+const ReposLazy = lazy(() => import('../../componets/ReposVercel'))
 export function HomeScreen() {
   const sx = useSx()
   const { value, setValue } = useGlobalContext() as userContextInterface
@@ -33,6 +27,9 @@ export function HomeScreen() {
         Welcome to Solito. {value}
       </H1>
       <View sx={{ maxWidth: 600 }}>
+        <Suspense fallback={<H1>loagind repos vercel</H1>}>
+          <ReposLazy />
+        </Suspense>
         <P sx={{ textAlign: 'center' }}>
           Here is a basic starter to show you how you can navigate from one
           screen to another. This screen uses the same code on Next.js and React

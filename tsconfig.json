@@ -1,5 +1,7 @@
 {
   "compilerOptions": {
+    "target": "es5",
+    "module": "esnext",
     "strictNullChecks": true,
     "noUncheckedIndexedAccess": true,
     "paths": {
